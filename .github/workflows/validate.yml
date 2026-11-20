@@ -1,0 +1,33 @@
+name: Finance Data Validation
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  validate-file:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Verify financedata.txt exists
+        run: |
+          if [ ! -f financedata.txt ]; then
+            echo "ERROR: financedata.txt file not found"
+            exit 1
+          fi
+
+      - name: Verify required content
+        run: |
+          if grep -q "Hello Lord Vishnu" financedata.txt; then
+            echo "Required text found"
+          else
+            echo "ERROR: Required text not found"
+            exit 1
+          fi
+
+      - name: Validation Passed
+        run: echo "File validation successful"
