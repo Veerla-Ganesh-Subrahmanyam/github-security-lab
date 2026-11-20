@@ -10,12 +10,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
       - name: Search for Passwords
         run: |
-          if grep -R "password=" .; then
+          if grep -R --exclude-dir=.github "password=" .; then
             echo "Password Found"
             exit 1
           fi
